@@ -31,6 +31,7 @@ from ctypes import *
 import math
 import random
 import os
+import time
 
 def sample(probs):
     s = sum(probs)
@@ -233,7 +234,11 @@ def detect(net, meta, image, thresh=.5, hier_thresh=.5, nms=.45, debug= False):
     #pylint: disable= C0321
     im = load_image(image, 0, 0)
     if debug: print("Loaded image")
+    start = time.clock()
     ret = detect_image(net, meta, im, thresh, hier_thresh, nms, debug)
+    end = time.clock()
+    print "time:%g" % (end-start)
+
     free_image(im)
     if debug: print("freed image")
     return ret
