@@ -101,11 +101,13 @@ def YOLO():
                                    interpolation=cv2.INTER_LINEAR)
 
         darknet.copy_image_from_bytes(darknet_image,frame_resized.tobytes())
-
-        detections = darknet.detect_image(netMain, metaMain, darknet_image, thresh=0.25)
+       
+        prev_time = time.time()
+       for i in 0..10:
+            detections = darknet.detect_image(netMain, metaMain, darknet_image, thresh=0.25)
+        print(1/(time.time()-prev_time))
         image = cvDrawBoxes(detections, frame_resized)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        print(1/(time.time()-prev_time))
         cv2.imshow('Demo', image)
         cv2.waitKey(3)
     cap.release()
